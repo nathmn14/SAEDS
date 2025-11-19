@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bienvenue sur SAEDS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <!-- Thème vert personnalisé (remplace les couleurs des boutons, accent, etc.) -->
+  <style>
+    /* Palette plus moderne et harmonisée */
+    :root {
+      --accent: #2E7D32;
+      /* vert foncé moderne */
+      --accent-dark: #1B5E20;
+      /* vert plus foncé */
+      --muted-bg: #f7f8fc;
+      /* fond doux */
+      --text-color: #0f172a;
+      /* texte principal */
+      --muted: #64748b;
+    }
+
+    /* Collapsible FAQ styles */
+    .faq-item {
+      margin-bottom: 1rem;
+    }
+
+    .faq-answer {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .faq-answer[role="button"] {
+      cursor: pointer;
+    }
+
+    .collapse-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .32s ease, opacity .24s ease;
+      opacity: 0;
+    }
+
+    .faq-item.expanded .collapse-content {
+      opacity: 1;
+    }
+
+    .collapse-content ul {
+      margin: .5rem 0 0 1.1rem;
+    }
+
+    .faq-toggle-indicator {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin-left: .5rem;
+      transform: rotate(0);
+      transition: transform .2s;
+    }
+
+    .faq-item.expanded .faq-toggle-indicator {
+      transform: rotate(90deg);
+    }
+
+    body {
+      color: var(--text-color);
+      background-color: var(--muted-bg);
+    }
+
+    .logo {
+      color: var(--accent-dark);
+      font-weight: 800;
+      letter-spacing: 0.2px
+    }
+
+    /* Boutons modernisés */
+    .btn {
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: #fff;
+      padding: 0.6rem 1rem;
+      border-radius: 10px;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 8px 20px rgba(92, 33, 182, 0.12);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 40px rgba(92, 33, 182, 0.14);
+    }
+
+    .btn.btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.35);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn.btn-secondary {
+      background: rgba(255, 255, 255, 0.25);
+      color: #fff;
+      border: 2px solid rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(8px);
+      font-weight: 600;
+    }
+
+    .floating-btn {
+      background: var(--accent-dark);
+      color: #fff;
+      box-shadow: 0 10px 30px rgba(59, 33, 120, 0.16);
+      border-radius: 999px;
+      padding: 10px 14px
+    }
+
+    /* Services & exemples : grille responsive */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .service-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 1.8rem 1.6rem;
+      box-shadow: 0 8px 30px rgba(15, 23, 42, 0.04);
+      border: 1px solid rgba(15, 23, 42, 0.03);
+      transition: transform .25s ease, box-shadow .25s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 50px rgba(15, 23, 42, 0.08);
+    }
+
+    .service-card h3 {
+      margin: 0 0 .8rem 0;
+      color: var(--accent-dark);
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .ethique-badge {
+      background: rgba(46, 125, 50, 0.1);
+      color: var(--accent-dark);
+      padding: 0.3rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    .service-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 0.98rem;
+    }
+
+    /* Gallery improvements: animations + responsive images */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .gallery-item {
+      background: linear-gradient(135deg, #fff 0%, #f8f6ff 100%);
+      border-radius: 14px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      border: 1px solid rgba(15, 23, 42, 0.03);
+      padding: 8px;
+      transition: transform .28s cubic-bezier(.2, .9, .2, 1), box-shadow .28s;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.10);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 220px;
+      object-fit: contain;
+      background-color: #f8f6ff;
+      border-radius: 10px;
+      display: block;
+    }
+
+    .gallery-item figcaption {
+      padding: 8px 10px;
+      font-size: 0.95rem;
+      color: var(--accent-dark);
+      text-align: center;
+    }
+
+    /* Subtle reveal animation used with existing JS (data-reveal) */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity .6s ease, transform .6s ease
+    }
+
+    [data-reveal].visible {
+      opacity: 1;
+      transform: none;
+      animation: fadeInUp .6s ease both
+    }
+
+    /* Contact buttons */
+    .contact-buttons {
+      display: flex;
+      justify-content: center;
+      margin: 1rem 0;
+      width: 100%;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .phone-btn,
+    .whatsapp-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .whatsapp-btn {
+      background-color: #25D366;
+    }
+
+    /* Mobile tweaks */
+    @media (max-width: 768px) {
+      .banner h1 {
+        font-size: 1.8rem;
+        line-height: 1.2
+      }
+
+      .gallery-item img {
+        height: 160px
+      }
+
+      .gallery-intro {
+        font-size: 0.95rem;
+        padding: 0 10px
+      }
+
+      header nav {
+        padding: 12px;
+      }
+
+      .btn {
+        padding: 10px 18px;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .banner h1 {
+        font-size: 1.6rem;
+        line-height: 1.15
+      }
+
+      .gallery-item img {
+        height: 150px
+      }
+
+      .gallery-intro {
+        font-size: 0.9rem;
+        padding: 0 8px
+      }
+
+      header nav {
+        padding: 10px;
+      }
+
+      header nav .logo {
+        font-size: 1.1rem;
+      }
+
+      .btn {
+        padding: 9px 16px;
+        font-size: 0.85rem;
+        margin: 5px;
+      }
+
+      .floating-btn {
+        padding: 9px 12px;
+        font-size: 0.8rem;
+        bottom: 12px;
+        right: 12px;
+      }
+
+      .services-grid {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.2rem;
+      }
+
+      .faq-item {
+        padding: 16px 14px;
+        margin: 10px auto;
+      }
+
+      .faq-item h3 {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header id="header">
+    <nav aria-label="Navigation principale">
+      <div class="logo">🎓 SAEDS</div>
+      <button class="burger" id="burger" aria-controls="mobile-menu" aria-expanded="false" aria-label="Ouvrir le menu">
+        ☰
+      </button>
+      <div class="nav-links">
+        <a href="#home">Accueil</a>
+        <a href="#services">Services</a>
+        <a href="#enregistrement">Enregistrement</a>
+        <a href="#gallery">Galerie</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+    <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+      <div class="mobile-menu-dialog" role="dialog" aria-label="Menu mobile">
+        <button class="close-menu" id="closeMenu" aria-label="Fermer le menu">
+          ✕
+        </button>
+        <a href="#home" data-mobile-link>Accueil</a>
+        <a href="#services" data-mobile-link>Services</a>
+        <a href="#enregistrement" data-mobile-link>Enregistrement</a>
+        <a href="#gallery" data-mobile-link>Galerie</a>
+        <a href="#contact" data-mobile-link>Contact</a>
+      </div>
+      <div class="mobile-menu-backdrop" id="menuBackdrop"></div>
+    </div>
+  </header>
+
+  <!-- Bannière -->
+  <section id="home" class="banner">
+    <div class="banner-content">
+      <h1>Bienvenue chez SAEDS, votre partenaire de réussite</h1>
+      <br><br>
+      <div class="banner-buttons">
+        <a href="#enregistrement" class="btn">Enregistrez-vous dès maintenant</a>
+        <a href="#services" class="btn btn-secondary">Découvrir nos services</a>
+      </div>
+    </div>
+    <style>
+      #home.banner {
+        background: linear-gradient(rgba(0, 0, 0, 0.48), rgba(0, 0, 0, 0.48)), url("assets/img/hero-head.jpg") center/cover no-repeat;
+      }
+    </style>
+  </section>
+
+  <!-- Bouton flottant -->
+  <a href="#enregistrement" class="floating-btn">📝 Enregistrement</a>
+
+  <!-- Accueil / Présentation -->
+  <section id="about" class="fade-in">
+    <h2>SAEDS vous souhaite la bienvenue !</h2>
+    <div class="about-container">
+      <div class="about-text">
+        <p>
+          SAEDS est une structure dédiée à l'excellence académique. Nous accompagnons les étudiants dans la conception,
+          la rédaction, la méthodologie et le perfectionnement de leurs travaux scientifiques (TFC, mémoires, projets
+          tutorés, rapports de stages, etc.). Découvrez un espace pensé pour vous permettre de réussir vos études en
+          toute autonomie, rigueur et confiance.
+        </p>
+        <p>Notre mission est d'aider les étudiants à produire des travaux de qualité, tout en respectant l'éthique
+          académique. Nous fournissons encadrement, orientation méthodologique, coaching scientifique,relecture,
+          correction et appui technique (mise en forme, analyse statistique, SPSS, planifiction, etc.). Nous formons des
+          étudiants autonomes, compétents et capabls de réussir leurs travaux scientifiques.</p>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="fade-in">
+    <h2>Nos Services</h2>
+    <p style="text-align: center; max-width: 800px; margin: 0 auto 2rem; color: var(--muted); line-height: 1.6;">
+      Découvrez notre gamme complète de services conçus pour répondre à tous vos besoins académiques.
+      Notre équipe d'experts est là pour vous accompagner à chaque étape de votre projet.
+    </p>
+
+    <div class="services-grid" aria-hidden="false">
+      <div class="service-card">
+        <div class="service-icon">✍️</div>
+        <h3>Rédaction académique</h3>
+        <p>Encadrement professionnel dans la rédaction de vos travaux académiques selon vos spécificités et exigences.
+        </p>
+        <div class="service-tag">Populaire</div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">📝</div>
+        <h3>Relecture & Correction</h3>
+        <p>Amélioration de la qualité rédactionnelle, correction des erreurs et optimisation de la structure de votre
+          document.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">📚</div>
+        <h3>Méthodologie de recherche</h3>
+        <p>Accompagnement dans la définition de votre problématique et la mise en place de votre méthodologie.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">📊</div>
+        <h3>Analyse des données</h3>
+        <p>Traitement statistique avancé et interprétation professionnelle de vos données de recherche.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🎯</div>
+        <h3>Préparation à la soutenance</h3>
+        <p>Coaching personnalisé et création de supports visuels professionnels (PowerPoint) pour votre présentation
+          orale.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🔒</div>
+        <h3>Vérification anti-plagiat</h3>
+        <p>Contrôle de l'originalité et détection d'éléments générés automatiquement.</p>
+      </div>
+
+      <div class="service-card" style="background-color: rgba(46, 125, 50, 0.05); border: 1px dashed var(--accent);">
+        <div class="service-icon">💡</div>
+        <h3>Service sur mesure</h3>
+        <p>Un besoin spécifique ? Notre équipe s'adapte à votre situation pour vous proposer une solution personnalisée.
+        </p>
+        <p style="font-size: 0.9em; margin-top: 10px; color: var(--accent-dark); font-weight: 600;">
+          Contactez-nous pour discuter de votre projet
+        </p>
+      </div>
+    </div>
+
+    <style>
+      .service-card {
+        position: relative;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      .service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+      }
+
+      .service-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: var(--accent);
+      }
+
+      @media (max-width: 640px) {
+        .service-icon {
+          font-size: 2rem;
+          margin-bottom: 0.8rem;
+        }
+      }
+
+      .service-tag {
+        position: absolute;
+        top: -10px;
+        right: 15px;
+        background: var(--accent);
+        color: white;
+        padding: 3px 10px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .service-card:nth-child(1) {
+        background-color: #e3f2fd;
+      }
+
+      /* Light Blue */
+      .service-card:nth-child(2) {
+        background-color: #e8f5e9;
+      }
+
+      /* Light Green */
+      .service-card:nth-child(3) {
+        background-color: #fff3e0;
+      }
+
+      /* Light Orange */
+      .service-card:nth-child(4) {
+        background-color: #f3e5f5;
+      }
+
+      /* Light Purple */
+      .service-card:nth-child(5) {
+        background-color: #ffebee;
+      }
+
+      /* Light Red */
+      .service-card:nth-child(6) {
+        background-color: #fffde7;
+      }
+
+      /* Light Yellow */
+    </style>
+
+
+  </section>
+
+  <!-- Enregistrement -->
+  <section id="enregistrement" class="tickets fade-in">
+    <h2>Enregistrement</h2>
+    <p>
+      Veuillez compléter les informations ci-dessous afin que nous puissions analyser
+      votre besoin et vous proposer un devis adapté.
+    </p>
+
+    <!-- Formulaire Google (remplace le formulaire local) -->
+    <p>Pour toute question ou assistance, n'hésitez pas à nous contacter :</p>
+    <div class="contact-buttons">
+      <div class="button-group">
+        <a href="https://wa.me/243824324447" class="btn phone-btn">
+          <span>📞</span> 082 43 24 447
+        </a>
+        <a href="https://wa.me/243824324447" target="_blank" class="btn whatsapp-btn">
+          <span>💬</span> Écrivez-nous sur WhatsApp
+        </a>
+      </div>
+
+    </div>
+
+
+
+    <p>Pour vous enregistrer, merci de remplir notre formulaire Google Forms. Cliquez sur le bouton ci-dessous pour y
+      accéder.</p>
+    <p>
+      <a class="btn" href="https://forms.gle/W1Xaojcpyan8sGAe8" target="_blank" rel="noopener noreferrer"
+        id="formLink">Remplir le formulaire d'enregistrement</a>
+    </p>
+    <script>
+      // Ajouter un gestionnaire d'événement pour détecter quand le formulaire est soumis
+      document.getElementById('formLink').addEventListener('click', function () {
+        // Stocker dans le localStorage que le formulaire a été ouvert
+        localStorage.setItem('formOpened', 'true');
+      });
+
+      // Vérifier si le formulaire a été soumis (à exécuter sur la page de retour)
+      window.addEventListener('load', function () {
+        if (localStorage.getItem('formOpened') === 'true') {
+          // Afficher le message de confirmation
+          const confirmationMsg = document.querySelector('.confirmation-message');
+          if (confirmationMsg) {
+            confirmationMsg.style.display = 'block';
+            // Faire défiler jusqu'au message de confirmation
+            setTimeout(() => {
+              confirmationMsg.scrollIntoView({ behavior: 'smooth' });
+            }, 500);
+          }
+          // Réinitialiser le drapeau
+          localStorage.removeItem('formOpened');
+        }
+      });
+    </script>
+    <div class="confirmation-message"
+      style="display: none; background-color: #e8f5e9; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid var(--accent);">
+      <p>✅ Merci pour votre enregistrement ! Nous avons bien reçu votre demande et vous contacterons dans les plus brefs
+        délais pour finaliser votre projet.</p>
+    </div>
+    <br>
+
+  </section>
+
+  <!-- Galerie -->
+  <section id="gallery" class="fade-in">
+    <h2>Galerie</h2>
+    <p class="gallery-intro">
+      Découvrez quelques moments forts de nos accompagnements, ateliers et
+      soutenances. Ces images reflètent notre engagement auprès des
+      étudiants : travail collaboratif, coaching de soutenance et
+      célébrations des réussites académiques. Inspirez-vous et rejoignez-nous
+      pour faire avancer votre projet.
+    </p>
+    <div class="gallery-grid">
+      <figure class="gallery-item" data-reveal>
+        <img src="assets/img/img1.jpeg" alt="Atelier de travail" />
+        <figcaption class="mini-caption">Atelier de travail</figcaption>
+      </figure>
+      <figure class="gallery-item" data-reveal>
+        <img src="assets/img/img2.jpeg" alt="Soutenance réussie" />
+        <figcaption class="mini-caption">Soutenance réussie</figcaption>
+      </figure>
+      <figure class="gallery-item" data-reveal>
+        <img src="assets/img/img3.jpeg" alt="Remise des diplômes" />
+        <figcaption class="mini-caption">Remise des diplômes</figcaption>
+      </figure>
+      <figure class="gallery-item" data-reveal>
+        <img src="assets/img/img4.jpeg" alt="Séance de coaching" />
+        <figcaption class="mini-caption">Séance de coaching</figcaption>
+      </figure>
+      <figure class="gallery-item" data-reveal>
+        <img src="assets/img/img5.jpeg" alt="Travail collaboratif" />
+        <figcaption class="mini-caption">Travail collaboratif</figcaption>
+      </figure>
+      <figure class="gallery-item" data-reveal>
+        <img src="assets/img/img6.jpeg" alt="Analyse et présentation" />
+        <figcaption class="mini-caption">Analyse et présentation</figcaption>
+      </figure>
+      <figure class="gallery-item" data-reveal>
+        <img src="assets/img/img7.jpeg" alt="Présentation finale" />
+        <figcaption class="mini-caption">Présentation finale</figcaption>
+      </figure>
+      <figure class="gallery-item" data-reveal>
+        <img src="assets/img/img8.jpeg" alt="Célébration" />
+        <figcaption class="mini-caption">Célébration</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="fade-in">
+    <h2>Questions fréquentes</h2>
+
+    <div class="faq-item">
+      <h3>Q : Proposez-vous des sujets de recherche si je n'en ai pas ?</h3>
+      <p>Absolument ! Nous disposons d'une large base de données de sujets de recherche dans divers domaines. Voici
+        quelques exemples de thèmes populaires :
+        <br><br>
+        - Gestion et management des entreprises <br>
+        - Économie et développement <br>
+        - Sciences de l'éducation <br>
+        - Sciences politiques et relations internationales <br>
+        - Santé publique et médecine <br><br>
+
+        Nos experts peuvent vous aider à affiner un sujet qui correspond à vos intérêts et aux exigences académiques.
+      </p>
+    </div>
+    </div>
+
+    <div class="faq-item">
+      <h3>Q : Comment sont sélectionnés les experts qui m'accompagneront ?</h3>
+      <p class="faq-answer" role="button" aria-expanded="false">
+        R : Notre processus d'accompagnement est personnalisé pour répondre aux besoins spécifiques de chaque client.
+        Nous commençons par une évaluation de votre projet pour comprendre vos objectifs et vos attentes. Ensuite, nous
+        travaillons étroitement avec vous pour définir une stratégie de rédaction adaptée à votre sujet et à votre
+        niveau d'avancement. Nous vous fournissons des conseils et des orientations pour la recherche, la rédaction et
+        la révision de votre travail. Nous vous aidons également à préparer votre soutenance et à répondre à toutes les
+        questions qui peuvent se poser.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Q : Comment garantissez-vous la qualité de vos services ?</h3>
+      <p class="faq-answer" role="button" aria-expanded="false">
+        R : Nous mettons tout en œuvre pour garantir la qualité de nos services. Nous recrutons des experts en rédaction
+        et en soutenance qui ont une expérience approfondie dans leur domaine. Nous utilisons des outils de vérification
+        de la conformité aux normes et aux directives de l'université pour vous assurer que votre travail répond aux
+        exigences. Nous effectuons également une vérification approfondie de l'originalité du travail à l'aide de
+        vérificateurs anti-plagiat.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Q : Pouvez-vous me donner des exemples de travaux réalisés par l'agence SAEDS ?</h3>
+      <p class="faq-answer" role="button" aria-expanded="false">
+        R : Oui, nous sommes fiers de nos réalisations passées. Cliquez pour voir quelques exemples.
+        <span class="faq-toggle-indicator">▶</span>
+      </p>
+      <div class="collapse-content" aria-hidden="true">
+        <ul>
+          <li>Mémoire de fin de licence en économie et gestion des entreprises : "Analyse de la situation économique du
+            Maroc et proposition de stratégies d'investissement"</li>
+          <li>Travaux de fin de master en marketing : "Étude de cas sur la campagne publicitaire de la marque Nike"</li>
+          <li>Projet tutoré en droit : "Analyse de la loi sur la protection des données personnelles dans le contexte
+            des entreprises"</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <h3>Q : Comment puis-je payer pour vos services ?</h3>
+      <p class="faq-answer" role="button" aria-expanded="false">
+        R : Nous acceptons différentes méthodes de paiement, notamment virement bancaire, espèces et paiement en ligne
+        via notre plateforme sécurisée. Nous vous fournirons les détails de paiement lors de l'acceptation de votre
+        projet.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Q : Combien de temps met-il pour vous de réaliser mon travail ?</h3>
+      <p class="faq-answer" role="button" aria-expanded="false">
+        R : Le délai dépend de la complexité du travail et de la date limite que vous nous fournissez. Nous travaillons
+        avec vous pour définir un calendrier adapté et vous tenons informé de l'avancement à chaque étape.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Q : Pouvez-vous me donner des conseils pour préparer ma soutenance ?</h3>
+      <p class="faq-answer" role="button" aria-expanded="false">
+        R : Bien sûr. Quelques conseils (cliquez pour dérouler) :
+        <span class="faq-toggle-indicator">▶</span>
+      </p>
+      <div class="collapse-content" aria-hidden="true">
+        <ul>
+          <li>Commencez la préparation à l'avance pour disposer de suffisamment de temps.</li>
+          <li>Organisez votre contenu de manière claire et logique.</li>
+          <li>Préparez des réponses aux questions courantes et anticipez les points faibles.</li>
+          <li>Entraînez-vous à l'oral et répétez votre présentation plusieurs fois.</li>
+        </ul>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="fade-in">
+    <h2>Contact</h2>
+    <p>Email : <a href="mailto:Gaellutondo10@gmail.com">Gaellutondo10@gmail.com</a></p>
+    <p>Téléphone 1 : <a href="https://wa.me/243824324447" target="_blank">+243 824 324 447</a></p>
+    <p>Téléphone 2 : <a href="https://wa.me/243991968023" target="_blank">+243 991 968 023</a></p>
+    <p>
+      <a href="https://wa.me/+243 824 324 447 " target="_blank">
+        <span>💬</span> Écrivez-nous sur WhatsApp
+      </a>
+    </p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 SAEDS. Tous droits réservés.</p>
+    <p class="site-credit">Nous contacter <strong>SAEDS </strong> — <a href="https://wa.me/243824324447">+243 824 324
+        447
+      </a> — <a href="mailto:Gaellutondo10@gmail.com">Gaellutondo10@gmail.com</a></p>
+  </footer>
+
+  <!-- Small script to handle FAQ collapse/expand -->
+  <script>
+    // Gestion de la soumission du formulaire
+    document.addEventListener('DOMContentLoaded', function () {
+      // Vérifier si l'URL contient un paramètre de succès
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has('enregistrement') && urlParams.get('enregistrement') === 'reussi') {
+        const confirmationMsg = document.querySelector('.confirmation-message');
+        if (confirmationMsg) {
+          confirmationMsg.style.display = 'block';
+          // Faire défiler jusqu'au message de confirmation
+          setTimeout(() => {
+            confirmationMsg.scrollIntoView({ behavior: 'smooth' });
+          }, 500);
+        }
+      }
+    });
+
+    // Gestion des FAQ
+    (function () {
+      const items = document.querySelectorAll('.faq-item');
+      items.forEach(item => {
+        const answer = item.querySelector('.faq-answer');
+        const content = item.querySelector('.collapse-content');
+        if (!answer) return;
+        answer.addEventListener('click', () => {
+          const expanded = item.classList.toggle('expanded');
+          answer.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+          if (content) {
+            if (expanded) {
+              // set to natural height for smooth open
+              content.style.maxHeight = content.scrollHeight + 'px';
+              content.setAttribute('aria-hidden', 'false');
+            } else {
+              content.style.maxHeight = '0';
+              content.setAttribute('aria-hidden', 'true');
+            }
+          }
+        });
+      });
+      // ensure collapse contents have maxHeight=0 initially
+      document.querySelectorAll('.collapse-content').forEach(c => c.style.maxHeight = '0');
+    })();
+  </script>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

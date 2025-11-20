@@ -125,7 +125,8 @@
     }
 
     .service-card {
-      background: #fff;
+      background: #f5f3ff;
+      /* Violet doux uniforme */
       border-radius: 14px;
       padding: 1.8rem 1.6rem;
       box-shadow: 0 8px 30px rgba(15, 23, 42, 0.04);
@@ -334,6 +335,18 @@
         font-size: 0.9rem;
       }
     }
+
+    .qr-code {
+      max-width: 120px;
+      height: auto;
+      border-radius: 12px;
+      transition: transform 0.3s ease;
+    }
+
+    .qr-code:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    }
   </style>
 </head>
 
@@ -505,36 +518,7 @@
         font-weight: 600;
       }
 
-      .service-card:nth-child(1) {
-        background-color: #e3f2fd;
-      }
-
-      /* Light Blue */
-      .service-card:nth-child(2) {
-        background-color: #e8f5e9;
-      }
-
-      /* Light Green */
-      .service-card:nth-child(3) {
-        background-color: #fff3e0;
-      }
-
-      /* Light Orange */
-      .service-card:nth-child(4) {
-        background-color: #f3e5f5;
-      }
-
-      /* Light Purple */
-      .service-card:nth-child(5) {
-        background-color: #ffebee;
-      }
-
-      /* Light Red */
-      .service-card:nth-child(6) {
-        background-color: #fffde7;
-      }
-
-      /* Light Yellow */
+      /* Couleurs individuelles supprimées pour uniformisation */
     </style>
 
 
@@ -662,7 +646,8 @@
         - Économie et développement <br>
         - Sciences de l'éducation <br>
         - Sciences politiques et relations internationales <br>
-        - Santé publique et médecine <br><br>
+        - Droit <br>
+        - Informatique <br><br>
 
         Nos experts peuvent vous aider à affiner un sujet qui correspond à vos intérêts et aux exigences académiques.
       </p>
@@ -690,23 +675,6 @@
         exigences. Nous effectuons également une vérification approfondie de l'originalité du travail à l'aide de
         vérificateurs anti-plagiat.
       </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>Q : Pouvez-vous me donner des exemples de travaux réalisés par l'agence SAEDS ?</h3>
-      <p class="faq-answer" role="button" aria-expanded="false">
-        R : Oui, nous sommes fiers de nos réalisations passées. Cliquez pour voir quelques exemples.
-        <span class="faq-toggle-indicator">▶</span>
-      </p>
-      <div class="collapse-content" aria-hidden="true">
-        <ul>
-          <li>Mémoire de fin de licence en économie et gestion des entreprises : "Analyse de la situation économique du
-            Maroc et proposition de stratégies d'investissement"</li>
-          <li>Travaux de fin de master en marketing : "Étude de cas sur la campagne publicitaire de la marque Nike"</li>
-          <li>Projet tutoré en droit : "Analyse de la loi sur la protection des données personnelles dans le contexte
-            des entreprises"</li>
-        </ul>
-      </div>
     </div>
 
     <div class="faq-item">
@@ -750,11 +718,12 @@
     <p>Email : <a href="mailto:Gaellutondo10@gmail.com">Gaellutondo10@gmail.com</a></p>
     <p>Téléphone 1 : <a href="https://wa.me/243824324447" target="_blank">+243 824 324 447</a></p>
     <p>Téléphone 2 : <a href="https://wa.me/243991968023" target="_blank">+243 991 968 023</a></p>
-    <p>
-      <a href="https://wa.me/243824324447" target="_blank">
+    <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1rem;">
+      <a href="https://wa.me/243824324447" target="_blank" style="text-decoration: none;">
         <span>💬</span> Écrivez-nous sur WhatsApp
       </a>
-    </p>
+      <img src="assets/img/qr_code.png" alt="Code QR WhatsApp" class="qr-code">
+    </div>
   </section>
 
   <!-- Footer -->
